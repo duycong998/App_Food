@@ -1,0 +1,62 @@
+<resources>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="Dialog" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+
+    <style name="tabLayoutFont"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/chewy</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
+    <style name="tabLayoutFontTitle"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/chewy</item>
+        <item name="android:textSize">70sp</item>
+    </style>
+
+    <style name="PaddingTopLeft10">
+        <item name="android:paddingLeft">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+
+    <style name="tabLayoutToolbarStyle"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/chewy</item>
+        <item name="android:textSize">@dimen/sp_35</item>
+    </style>
+
+    <style name="fontName" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/chewy</item>
+        <item name="android:textSize">@dimen/sp_25</item>
+    </style>
+
+    <style name="nametitle"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/regular</item>
+        <item name="android:textSize">50sp</item>
+    </style>
+
+    <style name="nametitlee"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/regular</item>
+        <item name="android:textSize">35sp</item>
+    </style>
+
+    <style
+        name="name_title"
+        parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:fontFamily">@font/chewy</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+</resources>
