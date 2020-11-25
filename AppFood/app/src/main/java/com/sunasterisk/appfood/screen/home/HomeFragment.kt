@@ -65,9 +65,9 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         val dataClient = APIUtil.getData()
         val callBack = dataClient?.getDataMeal(strMeal)
         callBack!!.enqueue(object : Callback<MealType> {
-            override fun onResponse(p0: Call<MealType>?, p1: Response<MealType>?) {
-                if (p1?.body() != null) {
-                    mealType = p1.body()
+            override fun onResponse(p0: Call<MealType>?, response: Response<MealType>?) {
+                if (response?.body() != null) {
+                    mealType = response.body()
                     listMeal.clear()
                     listMeal.addAll(mealType.listMealType!!)
                     mealAdapter.updateDataRecipe(listMeal)
@@ -136,14 +136,13 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
             }
 
             override fun onFailure(p0: Call<Categories>?, p1: Throwable?) {
-                Log.d(TAG, "aaa" + p1.toString())
+                Log.d(TAG, p1.toString())
             }
         })
     }
 
     override fun onItemClickListener(item: Category?) {
         getDataMeal(item?.name ?: "")
-        //       Toast.makeText(this.context, item?.name, Toast.LENGTH_LONG).show()
     }
 
     private fun initView() {
@@ -159,8 +158,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     }
 
     override fun onItemClick(item: Recipe?) {
-        val transaction: FragmentTransaction =
-            requireActivity().supportFragmentManager.beginTransaction()
+        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
         transaction.add(R.id.container, DetailFragment.newInstance(item!!), "fragA")
         transaction.commit()
 //        val fragmentManager = fragmentManager

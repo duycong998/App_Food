@@ -58,5 +58,6 @@
         parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/chewy</item>
         <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/colorBlack</item>
     </style>
 </resources>

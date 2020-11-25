@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bgg">
+    android:background="@drawable/aa">
 
     <ImageView
         android:id="@+id/imageAnime"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_120"
         android:scaleType="fitXY"
         android:src="@drawable/master"
         android:transitionName="logo_image"
@@ -43,6 +43,7 @@
             android:layout_marginRight="10dp"
             android:hint="UserName"
             android:transitionName="logo_user"
+            app:startIconDrawable="@drawable/ic_user"
             app:boxBackgroundColor="#80FFFFFF"
             app:hintTextColor="@color/white">
 
@@ -54,11 +55,12 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edittextPassWord"
+            app:startIconDrawable="@drawable/ic_pass"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:layout_marginLeft="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:hint="PassWord"
             android:transitionName="logo_pass"
             app:boxBackgroundColor="#80FFFFFF"
@@ -71,6 +73,7 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
+            android:layout_marginRight="@dimen/dp_10"
             android:layout_margin="@dimen/dp_10"
             style="@style/name_title"
             android:textColor="@color/white"
@@ -97,10 +100,10 @@
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
             android:layout_width="match_parent"
+            android:backgroundTint="@color/colorButton"
             android:layout_height="wrap_content"
-            android:background="@drawable/custom_button_new_user"
             android:text="NEW USER? CREATE ACCOUNT"
+            android:textStyle="bold"
             android:transitionName="logo_title" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

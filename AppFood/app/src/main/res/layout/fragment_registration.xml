@@ -7,8 +7,8 @@
 
     <ImageView
         android:id="@+id/imageAnimaSignUp"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_120"
         android:scaleType="fitXY"
         android:src="@drawable/master"
         android:transitionName="logo_image"
@@ -16,6 +16,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
+        android:layout_marginLeft="@dimen/dp_10"
         android:id="@+id/textViewSignUp"
         style="@style/nametitlee"
         android:layout_width="match_parent"

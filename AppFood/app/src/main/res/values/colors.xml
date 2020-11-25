@@ -14,4 +14,5 @@
     <color name="colorGrayChateau">#969FAA</color>
     <color name="colorPink">#F3E8EC</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="colorButton">#51F9F5F0</color>
 </resources>

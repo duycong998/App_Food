@@ -3,6 +3,7 @@ package com.sunasterisk.appfood.screen.search
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
@@ -51,6 +52,7 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder?>() {
 
         fun bindViewData(recipe: Recipe) {
             this.recipe = recipe
+            itemView.constrainLayoutItem.animation = AnimationUtils.loadAnimation(itemView.context,R.anim.ani_out)
             itemView.run {
                 foodNameView.text = recipe.name
                 foodID.text = recipe.tag
