@@ -18,6 +18,7 @@ import com.sunasterisk.appfood.data.model.Recipe
 import com.sunasterisk.appfood.data.model.RecipeType
 import com.sunasterisk.appfood.data.retrofit.APIUtil
 import com.sunasterisk.appfood.screen.main.PlayYoutubeActivity
+import com.sunasterisk.appfood.screen.main.tabLayout.MainPageFragment
 import kotlinx.android.synthetic.main.fragment_detail_info.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -80,7 +81,7 @@ class DetailFragment : Fragment() {
         ImageButtonPlay.setOnClickListener {
             val intent = Intent(context, PlayYoutubeActivity::class.java)
             intent.putExtra("you", recipe?.urlVideo)
-            Log.d("aaa", "" + recipe?.urlVideo)
+            Log.d(MainPageFragment.TAG, "" + recipe?.urlVideo)
             startActivity(intent)
         }
     }

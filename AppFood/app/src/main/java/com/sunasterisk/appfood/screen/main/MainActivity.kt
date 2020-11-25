@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         addFragment(SplashFragment.newInstance(), R.id.container)
+        //addFragment(MainPageFragment.newInstance(), R.id.container)
         val a = getSharedPreferences("recipe", Context.MODE_PRIVATE).getString("recipe", "")
         if(a== null || a == "") return
         listRecipe.add(Gson().fromJson(a ?: "", Recipe::class.java))

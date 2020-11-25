@@ -16,7 +16,6 @@ import com.sunasterisk.appfood.screen.main.tabLayout.MainPageFragment
 import kotlinx.android.synthetic.main.fragment_login.*
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
-    var check = true
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,8 +52,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
         buttonGo.setOnClickListener {
             val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.replace(R.id.container, MainPageFragment())
-            fragmentTransaction.commitNow()
+            fragmentTransaction.replace(R.id.container, MainPageFragment.newInstance())
+            fragmentTransaction.commit()
         }
     }
 }

@@ -42,7 +42,7 @@ class MainPageFragment : Fragment() {
     }
 
     private fun setupViewPager() {
-        viewPager.adapter = activity?.supportFragmentManager?.let {
+        viewPager.adapter = childFragmentManager.let {
             MainPagerAdapter(it).apply {
                 addFragment(homeFragment, resources.getString(R.string.home))
                 addFragment(searchFragment, resources.getString(R.string.search))
@@ -56,5 +56,8 @@ class MainPageFragment : Fragment() {
         private const val HOME_PAGE = 0
         private const val SEARCH_PAGE = 1
         private const val FAVORITE_PAGE = 2
+        const val TAG = "aaa"
+
+        fun newInstance() = MainPageFragment()
     }
 }

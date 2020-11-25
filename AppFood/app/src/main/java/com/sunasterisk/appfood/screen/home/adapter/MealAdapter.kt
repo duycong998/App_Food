@@ -3,6 +3,7 @@ package com.sunasterisk.appfood.screen.home.adapter
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.sunasterisk.appfood.R
@@ -48,6 +49,7 @@ class MealAdapter : RecyclerView.Adapter<MealAdapter.RecipeViewHolder>() {
 
         fun binData(meal: Meal) {
             this.meal = meal
+            itemView.constrainLayoutItem.animation = AnimationUtils.loadAnimation(itemView.context, R.anim.ani_in)
             itemView.run {
                 foodNameView.text = meal.strMeal
                 Picasso.with(context)
