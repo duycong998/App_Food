@@ -80,7 +80,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder?>() {
                     val bitmap = BitmapFactory.decodeByteArray(img, 0, img!!.size)
                     foodImageView.setImageBitmap(bitmap)
                 } else {
-                    Picasso.with(context).load(recipe.urlImage).into(foodImageView)
+                    Picasso.get().load(recipe.urlImage).into(foodImageView)
                 }
             }
         }

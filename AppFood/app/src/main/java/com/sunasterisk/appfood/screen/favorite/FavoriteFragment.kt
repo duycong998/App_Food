@@ -48,16 +48,16 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
     SendDataFragment<Recipe> {
     private val adapter: FavoriteAdapter by lazy { FavoriteAdapter() }
     private var listRecipe = mutableListOf<Recipe>()
-    val REQUEST_CODE_CAMERA = 123
-    val REQUEST_CODE_FOLDER = 456
+    private val REQUEST_CODE_CAMERA = 123
+    private val REQUEST_CODE_FOLDER = 456
     private lateinit var uri: String
     private lateinit var recipe: Recipe
     private var listAdd = mutableListOf<AddPicture>()
-    var diaLog: Dialog? = null
-    var diaLogEdit: Dialog? = null
-    var recipeDatabase: RecipeDatabase? = null
-    var recipeDao: RecipeDao? = null
-    private lateinit var list: List<Recipe>
+    private var diaLog: Dialog? = null
+    // private var diaLogEdit: Dialog? = null
+    private var recipeDatabase: RecipeDatabase? = null
+    private var recipeDao: RecipeDao? = null
+    //private lateinit var list: List<Recipe>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -272,11 +272,11 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
     }
 
     private fun openCamera() {
-
-//        ActivityCompat.requestPermissions(
-//            requireActivity(), arrayOf(Manifest.permission.CAMERA),
-//            REQUEST_CODE_CAMERA
-//        )
+        //check premisson
+//        ActivityCompat.requestPermissions(requireActivity(), arrayOf(Manifest.permission.CAMERA), REQUEST_CODE_CAMERA).apply {
+//            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+//            startActivityForResult(intent, REQUEST_CODE_CAMERA)
+//        }
 
         ActivityCompat.checkSelfPermission(
             requireContext(),
@@ -285,7 +285,6 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivityForResult(intent, REQUEST_CODE_CAMERA)
         }
-
     }
 
     private fun openFolder() {
@@ -294,12 +293,13 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
             Manifest.permission.READ_EXTERNAL_STORAGE
         ) != PackageManager.PERMISSION_GRANTED.apply {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-//            intent.setType("image/*");
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(uri)));
+//            intent.setType("image/*")
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(File(uri)))
             this@FavoriteFragment.startActivityForResult(intent, REQUEST_CODE_FOLDER)
         }
     }
 
+    //check permission
 //    override fun onRequestPermissionsResult(
 //        requestCode: Int,
 //        permissions: Array<out String>,
@@ -337,9 +337,9 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
     }
 
     override fun onItemClick(item: Recipe?) {
-        val builder = AlertDialog.Builder(context) as AlertDialog.Builder
+        val builder = AlertDialog.Builder(context)
         builder.setMessage("Bạn có muốn xóa không???")
-        builder.setPositiveButton("Có") { dialog, which ->
+        builder.setPositiveButton("Có") { dialog, _ ->
             Executors.newSingleThreadExecutor().execute {
                 recipeDao?.deleteUsers(item!!)
             }
@@ -347,40 +347,40 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
             dialog.dismiss()
         }
 
-        builder.setNegativeButton("Không") { dialog, which ->
+        builder.setNegativeButton("Không") { dialog, _ ->
             dialog.dismiss()
         }
         builder.show()
     }
 
-    private fun editRecipe() {
-        val diaLogEdit = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
-        diaLogEdit!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        diaLogEdit!!.setContentView(R.layout.item_edit_recipe)
-        val popup = PopupWindow(requireContext())
-        val listView = ListView(requireContext())
-        listAdd()
-        listView.adapter = AddPictureAdapter(requireContext(), listAdd)
-
-        listView.setOnItemClickListener { _, _: View, i, _ ->
-            if (i == 0) {
-                openCamera()
-                Toast.makeText(requireContext(), "cam", Toast.LENGTH_SHORT).show()
-            } else {
-                openFolder()
-                Toast.makeText(requireContext(), "folder", Toast.LENGTH_SHORT).show()
-            }
-            popup.dismiss()
-        }
-        popup.width = 400
-        popup.height = 300
-        popup.contentView = listView
-
-        diaLogEdit!!.linearAddPicture.setOnClickListener {
-            popup.showAsDropDown(it)
-        }
-        diaLogEdit.show()
-    }
+//    private fun editRecipe() {
+//        val diaLogEdit = Dialog(requireContext(), android.R.style.Theme_Black_NoTitleBar_Fullscreen)
+//        diaLogEdit!!.requestWindowFeature(Window.FEATURE_NO_TITLE)
+//        diaLogEdit!!.setContentView(R.layout.item_edit_recipe)
+//        val popup = PopupWindow(requireContext())
+//        val listView = ListView(requireContext())
+//        listAdd()
+//        listView.adapter = AddPictureAdapter(requireContext(), listAdd)
+//
+//        listView.setOnItemClickListener { _, _: View, i, _ ->
+//            if (i == 0) {
+//                openCamera()
+//                Toast.makeText(requireContext(), "cam", Toast.LENGTH_SHORT).show()
+//            } else {
+//                openFolder()
+//                Toast.makeText(requireContext(), "folder", Toast.LENGTH_SHORT).show()
+//            }
+//            popup.dismiss()
+//        }
+//        popup.width = 400
+//        popup.height = 300
+//        popup.contentView = listView
+//
+//        diaLogEdit!!.linearAddPicture.setOnClickListener {
+//            popup.showAsDropDown(it)
+//        }
+//        diaLogEdit.show()
+//    }
 
     companion object {
         fun newInstance() = FavoriteFragment()

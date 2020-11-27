@@ -4,9 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.WindowManager
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -21,16 +19,8 @@ import kotlinx.android.synthetic.main.fragment_splash.*
 
 @Suppress("DEPRECATION")
 class SplashFragment : Fragment(R.layout.fragment_splash) {
-    var topAnime: Animation? = null
-    var botAnime: Animation? = null
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    private var topAnime: Animation? = null
+    private var botAnime: Animation? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

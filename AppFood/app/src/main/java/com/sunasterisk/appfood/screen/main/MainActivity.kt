@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         val a = getSharedPreferences("recipe", Context.MODE_PRIVATE).getString("recipe", "")
         if(a== null || a == "") return
         listRecipe.add(Gson().fromJson(a ?: "", Recipe::class.java))
-        Picasso.with(this)
+        Picasso.get()
             .setIndicatorsEnabled(true)
     }
 
