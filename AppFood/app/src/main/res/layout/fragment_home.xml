@@ -72,6 +72,7 @@
                     android:layout_width="@dimen/dp_120"
                     android:layout_height="@dimen/dp_120"
                     android:scaleType="fitXY"
+                    android:transitionName="image_animation"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -83,6 +84,7 @@
                     android:ellipsize="end"
                     android:maxLines="1"
                     android:textSize="@dimen/sp_20"
+                    android:transitionName="text_animation"
                     app:layout_constraintLeft_toRightOf="@+id/imageMealThumbRecipe"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -142,7 +144,7 @@
 
             <com.scwang.smartrefresh.layout.footer.FalsifyFooter
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

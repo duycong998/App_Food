@@ -47,7 +47,7 @@ class CategoryAdapter : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>
         fun bindData(category: Category) {
             itemView.run {
                 textNameCategory.text = category.name
-                Picasso.with(context)
+                Picasso.get()
                     .load(category.image)
                     .placeholder(R.drawable.ic_loop)
                     .into(imageCategory)

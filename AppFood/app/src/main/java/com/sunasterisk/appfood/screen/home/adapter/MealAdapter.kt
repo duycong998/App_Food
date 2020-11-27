@@ -52,7 +52,7 @@ class MealAdapter : RecyclerView.Adapter<MealAdapter.RecipeViewHolder>() {
             itemView.constrainLayoutItem.animation = AnimationUtils.loadAnimation(itemView.context, R.anim.ani_in)
             itemView.run {
                 foodNameView.text = meal.strMeal
-                Picasso.with(context)
+                Picasso.get()
                     .load(meal.strMealThumb)
                     .placeholder(R.drawable.ic_loop1)
                     .into(foodImageView)

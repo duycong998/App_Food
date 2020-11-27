@@ -34,6 +34,7 @@
                 android:layout_height="250dp"
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_launcher_background"
+                android:transitionName="image_animation"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/toolbarDetail" />
@@ -60,17 +61,15 @@
                 android:layout_height="@dimen/dp_24"
                 android:layout_gravity="center"
                 android:layout_margin="@dimen/dp_10"
-                android:layout_marginRight="@dimen/dp_10"
                 android:background="@drawable/ic_favorite_24"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textAreaDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_5"
                 android:background="@drawable/custom_textview"
                 android:gravity="center"
                 android:padding="@dimen/dp_5"
@@ -78,23 +77,23 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/favoriteDrawer"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/textNameDetail"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/dp_10"
-                android:layout_marginTop="@dimen/dp_5"
                 android:background="@drawable/custom_textview"
                 android:gravity="center"
                 android:padding="@dimen/dp_5"
                 android:textSize="@dimen/sp_15"
+                android:transitionName="text_animation"
                 app:layout_constraintEnd_toEndOf="@id/textAreaDetail"
                 app:layout_constraintEnd_toStartOf="@+id/textAreaDetail"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/favoriteDrawer"
-                tools:ignore="MissingConstraints" />
+                app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <TextView
