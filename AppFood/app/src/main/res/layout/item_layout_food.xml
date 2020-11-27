@@ -3,11 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardBackgroundColor="@color/colorJanna"
+    android:id="@+id/idContainerLayout"
+    android:background="@color/colorBlack"
     app:cardCornerRadius="@dimen/dp_10">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constrainLayoutItem"
+        android:background="@color/colorJanna"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/dp_10">
@@ -16,7 +18,6 @@
             android:id="@+id/foodImageView"
             android:layout_width="@dimen/dp_80"
             android:layout_height="@dimen/dp_80"
-            android:background="@color/colorJanna"
             android:scaleType="fitXY"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintCircleRadius="@dimen/dp_10"
@@ -46,15 +47,20 @@
             app:layout_constraintStart_toEndOf="@+id/foodImageView"
             app:layout_constraintTop_toBottomOf="@+id/foodNameView" />
 
-        <ImageButton
+        <CheckBox
             android:id="@+id/favoriteDrawer"
             android:layout_width="@dimen/dp_24"
+            android:layout_margin="@dimen/dp_10"
             android:layout_height="@dimen/dp_24"
+            android:button="@null"
+            android:checked="false"
+            android:stateListAnimator="@anim/anim_scale"
             android:background="@drawable/ic_favorite_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toEndOf="@+id/foodNameView"
+            android:visibility="visible"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
     </androidx.constraintlayout.widget.ConstraintLayout>

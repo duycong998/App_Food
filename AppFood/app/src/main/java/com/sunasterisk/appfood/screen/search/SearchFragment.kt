@@ -1,9 +1,9 @@
 package com.sunasterisk.food_01.screen.search
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
@@ -37,6 +37,26 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
         super.onViewCreated(view, savedInstanceState)
         getDataSearch("chicken")
         initData()
+
+        isDark = getStatus()
+        if (isDark) {
+            constrainLayoutSearch.setBackgroundResource(R.drawable.custom_bg_while)
+        } else {
+            constrainLayoutSearch.setBackgroundResource(R.drawable.custom_bg_black)
+        }
+
+        floatingButton.setOnClickListener {
+            isDark = !isDark
+            if (isDark) {
+                constrainLayoutSearch.setBackgroundResource(R.drawable.custom_bg_while)
+                //isDark = false
+            } else {
+                constrainLayoutSearch.setBackgroundResource(R.drawable.custom_bg_black)
+                // isDark = true
+            }
+            searchFoodRecycler.adapter = recipeAdapter
+            saveStatus(isDark)
+        }
     }
 
     override fun onResume() {
@@ -50,7 +70,21 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
         recipeAdapter.registerItemRecyclerViewClickListener(this)
     }
 
-    private fun getDataSearchByID(strID : String) {
+    private fun saveStatus(isDark: Boolean) {
+//        requireActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE).edit()
+//            .putBoolean("isDark", false).apply()
+        val shared = requireActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val edior = shared.edit()
+        edior.putBoolean("isDark", isDark).apply()
+    }
+
+    private fun getStatus(): Boolean {
+        val shared = requireActivity().getSharedPreferences("myPref", Context.MODE_PRIVATE)
+        val isDark = shared.getBoolean("isDark", false)
+        return isDark
+    }
+
+    private fun getDataSearchByID(strID: String) {
         val dataClient = APIUtil.getData()
         val callBack = dataClient?.getDataById(strID)
         callBack!!.enqueue(object : Callback<RecipeType> {
@@ -59,7 +93,7 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
                 call: Call<RecipeType>?,
                 response: Response<RecipeType>?
             ) {
-                recipeType = response!!.body()
+                recipeType = response!!.body()!!
                 listRecipe.clear()
                 recipeType.recipeRandomType?.let { listRecipe.addAll(it) }
                 if (listRecipe.size > 0) {
@@ -87,7 +121,7 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
                 call: Call<RecipeType>?,
                 response: Response<RecipeType>?
             ) {
-                recipeType = response!!.body()
+                recipeType = response!!.body()!!
                 listRecipe.clear()
                 recipeType.recipeRandomType?.let { listRecipe.addAll(it) }
                 if (listRecipe.size > 0) {
@@ -116,9 +150,9 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                try{
+                try {
                     getDataSearchByID(newText.toInt().toString())
-                }catch (_: Exception){
+                } catch (_: Exception) {
                     getDataSearch(newText)
                 }
                 return true
@@ -130,12 +164,13 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
     override fun onItemClickListener(item: Recipe?) {
         val transaction: FragmentTransaction =
             requireActivity().supportFragmentManager.beginTransaction()
-        transaction.add(R.id.container, DetailFragment.newInstance(item!!),"fragA")
+        transaction.add(R.id.container, DetailFragment.newInstance(item!!), "fragA")
         transaction.commit()
     }
 
     companion object {
         fun newInstance() = SearchFragment()
         const val TAG = "AAA"
+        var isDark = false
     }
 }

@@ -12,13 +12,15 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.transition.TransitionInflater
+import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.squareup.picasso.Picasso
 import com.sunasterisk.appfood.R
 import com.sunasterisk.appfood.data.model.Recipe
 import com.sunasterisk.appfood.data.model.RecipeType
 import com.sunasterisk.appfood.data.retrofit.APIUtil
+import com.sunasterisk.appfood.screen.home.HomeFragment
 import com.sunasterisk.appfood.screen.main.PlayYoutubeActivity
-import com.sunasterisk.appfood.screen.main.tabLayout.MainPageFragment
 import kotlinx.android.synthetic.main.fragment_detail_info.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -58,16 +60,25 @@ class DetailFragment : Fragment() {
             val bitmap = BitmapFactory.decodeByteArray(img, 0, img!!.size)
             videoPlayYoutube.setImageBitmap(bitmap)
         } else {
-            Picasso.with(context).load(recipe?.urlImage).into(videoPlayYoutube)
+            Picasso.get().load(recipe?.urlImage).into(videoPlayYoutube)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
+        sharedElementReturnTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
     }
 
     private fun init() {
+        if(HomeFragment.checkFavorite) {
+            favoriteDrawerDetail.setBackgroundResource(R.drawable.ic_loved)
+        } else {
+            favoriteDrawerDetail.setBackgroundResource(R.drawable.ic_favorite_24)
+        }
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbarDetail)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbarDetail.setNavigationOnClickListener {
@@ -75,14 +86,19 @@ class DetailFragment : Fragment() {
                 requireActivity().supportFragmentManager.beginTransaction()
             val detailFragment = requireActivity().supportFragmentManager.findFragmentByTag("fragA")
             transaction.remove(detailFragment!!)
+//            transaction.replace(R.id.container, HomeFragment.newInstance())
+//                .addSharedElement(videoPlayYoutube, videoPlayYoutube.transitionName)
+//                .addSharedElement(textNameDetail, textNameDetail.transitionName)
             transaction.commit()
+           HomeFragment.checkFavorite = false
         }
 
         ImageButtonPlay.setOnClickListener {
             val intent = Intent(context, PlayYoutubeActivity::class.java)
             intent.putExtra("you", recipe?.urlVideo)
-            Log.d(MainPageFragment.TAG, "" + recipe?.urlVideo)
+//            Log.d(MainPageFragment.TAG, "" + recipe?.urlVideo)
             startActivity(intent)
+            Animatoo.animateZoom(context);
         }
     }
 
@@ -91,8 +107,8 @@ class DetailFragment : Fragment() {
         val callBack = dataClient?.getDataById(id)
         callBack!!.enqueue(object : Callback<RecipeType> {
             override fun onResponse(p0: Call<RecipeType>?, p1: Response<RecipeType>?) {
-                if (p1?.body() != null) {
-                    recipeRandomType = p1.body()
+                if (p1!!.body() != null) {
+                    recipeRandomType = p1!!.body()!!
                     listRecipe.clear()
                     listRecipe.addAll(recipeRandomType.recipeRandomType!!)
                     textNameDetail.text = listRecipe.first().name
@@ -108,11 +124,12 @@ class DetailFragment : Fragment() {
                     textMeasure3.text = listRecipe.first().ingre3
                     textMeasure4.text = listRecipe.first().ingre4
                     textMeasure5.text = listRecipe.first().ingre5
-                    Picasso.with(context).load(listRecipe.first().urlImage).into(videoPlayYoutube)
+                    Picasso.get().load(listRecipe.first().urlImage).into(videoPlayYoutube)
                     ImageButtonPlay.setOnClickListener {
                         val intent = Intent(context, PlayYoutubeActivity::class.java)
                         intent.putExtra("you", listRecipe.first().urlVideo)
                         startActivity(intent)
+                        Animatoo.animateZoom(context);
                     }
                 }
             }

@@ -29,7 +29,7 @@ data class Recipe (
     val instructions: String = "",
     @SerializedName("strTags")
     @Expose
-    val tag: String = "",
+    var tag: String = "",
     @SerializedName("strMealThumb")
     @Expose
     val urlImage: String = "",

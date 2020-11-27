@@ -4,11 +4,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AnimationUtils
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.sunasterisk.appfood.R
 import com.sunasterisk.appfood.data.model.Recipe
+import com.sunasterisk.food_01.screen.search.SearchFragment
 import com.sunasterisk.food_01.utils.OnItemRecyclerViewClickListenner
 import kotlinx.android.synthetic.main.item_layout_food.view.*
 
@@ -52,27 +52,36 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder?>() {
 
         fun bindViewData(recipe: Recipe) {
             this.recipe = recipe
-            itemView.constrainLayoutItem.animation = AnimationUtils.loadAnimation(itemView.context,R.anim.ani_out)
             itemView.run {
                 foodNameView.text = recipe.name
                 foodID.text = recipe.tag
-                Picasso.with(context)
+                Picasso.get()
                     .load(recipe.urlImage)
                     .placeholder(R.drawable.ic_loop1)
                     .into(foodImageView)
             }
             if (listFavorites.any { it == recipe.idRecipe }) {
-                itemView.favoriteDrawer.setImageResource(R.drawable.ic_loved)
+                itemView.favoriteDrawer.setBackgroundResource(R.drawable.ic_loved)
             } else {
-                itemView.favoriteDrawer.setImageResource(R.drawable.ic_favorite_24)
+                itemView.favoriteDrawer.setBackgroundResource(R.drawable.ic_favorite_24)
+            }
+
+            if(SearchFragment.isDark) {
+                itemView.constrainLayoutItem.setBackgroundResource(R.drawable.custom_bg_while)
+                itemView.idContainerLayout.setBackgroundResource(R.drawable.custom_bg_while)
+            } else {
+                itemView.constrainLayoutItem.setBackgroundResource(R.drawable.custom_bg_black)
+                itemView.idContainerLayout.setBackgroundResource(R.drawable.custom_bg_black)
             }
         }
 
         init {
+            itemView.constrainLayoutItem.animation = AnimationUtils.loadAnimation(itemView.context,R.anim.ani_out)
+            itemView.foodImageView.animation = AnimationUtils.loadAnimation(itemView.context, R.anim.ani_in)
             itemView.setOnClickListener(this)
             itemView.favoriteDrawer.apply {
                 setOnClickListener {
-                    Toast.makeText(context,recipe?.idRecipe,Toast.LENGTH_SHORT).show()
+//                    Toast.makeText(context,recipe?.idRecipe,Toast.LENGTH_SHORT).show()
                     if (listFavorites.any { it == recipe?.idRecipe }) {
                         listFavorites.remove(recipe?.idRecipe ?: return@setOnClickListener)
                     } else {

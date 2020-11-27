@@ -5,9 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.transition.TransitionInflater
 import com.squareup.picasso.Picasso
 import com.sunasterisk.appfood.R
 import com.sunasterisk.appfood.data.db.RecipeDao
@@ -20,6 +23,7 @@ import com.sunasterisk.appfood.screen.home.adapter.MealAdapter
 import com.sunasterisk.food_01.utils.OnItemRecyclerViewClickListenner
 import com.sunasterisk.food_01.utils.SendDataFragment
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlinx.android.synthetic.main.fragment_splash.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,6 +34,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     SendDataFragment<Recipe> {
     private val onItemMealClickByID = object : OnItemRecyclerViewClickListenner<Meal> {
         override fun onItemClickListener(item: Meal?) {
+            checkFavorite = false
             val transaction: FragmentTransaction =
                 activity!!.supportFragmentManager.beginTransaction()
             transaction.add(R.id.container, DetailFragment.newInstance(item!!.idMeal), "fragA")
@@ -46,6 +51,9 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     private var mealType = MealType()
     private lateinit var recipeDao: RecipeDao
     private lateinit var recipeDatabase: RecipeDatabase
+    var topAnime: Animation? = null
+    var botAnime: Animation? = null
+    var _checkFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,8 +65,26 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
+
+        topAnime = AnimationUtils.loadAnimation(requireContext(), R.anim.top_anim)
+        botAnime = AnimationUtils.loadAnimation(requireContext(), R.anim.bottom_anim)
+
+        imageMealThumbRecipe.animation = topAnime
+        textMealRecipe.animation = botAnime
+    }
+
+    override fun onStart() {
+        super.onStart()
         getDataCatogy()
         getDataRandom()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sharedElementEnterTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
+        sharedElementReturnTransition =
+            TransitionInflater.from(requireContext()).inflateTransition(R.transition.shared_image)
     }
 
     private fun getDataMeal(strMeal: String?) {
@@ -67,7 +93,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         callBack!!.enqueue(object : Callback<MealType> {
             override fun onResponse(p0: Call<MealType>?, response: Response<MealType>?) {
                 if (response?.body() != null) {
-                    mealType = response.body()
+                    mealType = response.body()!!
                     listMeal.clear()
                     listMeal.addAll(mealType.listMealType!!)
                     mealAdapter.updateDataRecipe(listMeal)
@@ -86,11 +112,11 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         val callBack = dataClient?.getDataRandom()
         callBack!!.enqueue(object : Callback<RecipeType> {
             override fun onResponse(p0: Call<RecipeType>?, p1: Response<RecipeType>?) {
-                recipeRandomType = p1!!.body()
+                recipeRandomType = p1?.body()!!
                 listRecipe.addAll(recipeRandomType.recipeRandomType!!)
                 textMealRecipe.text = listRecipe.first().name
                 textTagRecipe.text = listRecipe.first().tag
-                Picasso.with(context).load(listRecipe.first().urlImage).resize(120, 120)
+                Picasso.get().load(listRecipe.first().urlImage).resize(120, 120)
                     .into(imageMealThumbRecipe)
                 cardviewHome.setOnClickListener {
                     onItemClick(listRecipe.first())
@@ -103,17 +129,23 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
                                 it.idRecipe == listRecipe.first().idRecipe
                             }) {
                             favoriteDrawer.post {
-                                favoriteDrawer.setImageResource(R.drawable.ic_heart)
+                                favoriteDrawer.setBackgroundResource(R.drawable.ic_favorite_24)
+                                _checkFavorite = false
                                 Toast.makeText(context, "Bạn Đã Bỏ Thích", Toast.LENGTH_SHORT)
                                     .show()
                             }
                             recipeDao.deleteUsers(listRecipe.first())
                         } else {
                             favoriteDrawer.post {
-                                favoriteDrawer.setImageResource(R.drawable.ic_loved)
+                                favoriteDrawer.setBackgroundResource(R.drawable.ic_loved)
+                                _checkFavorite = true
                                 Toast.makeText(context, "Bạn Đã Thích", Toast.LENGTH_SHORT).show()
                             }
-                            recipeDao.insert(listRecipe.first())
+                            val a = listRecipe.first()
+                            if (a.tag.isNullOrEmpty()) {
+                                a.tag = ""
+                            }
+                            recipeDao.insert(a)
                         }
                     }
                 }
@@ -130,7 +162,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         val callBack = dataClient?.getDataCategory()
         callBack!!.enqueue(object : Callback<Categories> {
             override fun onResponse(p0: Call<Categories>?, response: Response<Categories>?) {
-                categories = response!!.body()
+                categories = response!!.body()!!
                 listCatory.addAll(categories.categories!!)
                 categoryAdapter.updateData(listCatory)
             }
@@ -158,17 +190,19 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     }
 
     override fun onItemClick(item: Recipe?) {
-        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
+        checkFavorite = _checkFavorite
+        val transaction: FragmentTransaction =
+            requireActivity().supportFragmentManager.beginTransaction()
         transaction.add(R.id.container, DetailFragment.newInstance(item!!), "fragA")
+//        transaction.replace(R.id.container, DetailFragment.newInstance(item!!), "fragA")
+//            .addSharedElement(imageMealThumbRecipe, imageMealThumbRecipe.transitionName)
+//            .addSharedElement(textMealRecipe, textMealRecipe.transitionName)
         transaction.commit()
-//        val fragmentManager = fragmentManager
-//        val fragmentTransaction = fragmentManager!!.beginTransaction()
-//        fragmentTransaction.replace(R.id.container, FragmentB())
-//        fragmentTransaction.commit()
     }
 
     companion object {
         fun newInstance() = HomeFragment()
         const val TAG = "AAA"
+        var checkFavorite = false
     }
 }
