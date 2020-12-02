@@ -34,6 +34,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     SendDataFragment<Recipe> {
     private val onItemMealClickByID = object : OnItemRecyclerViewClickListenner<Meal> {
         override fun onItemClickListener(item: Meal?) {
+            checkFavorite = false
             val transaction: FragmentTransaction =
                 activity!!.supportFragmentManager.beginTransaction()
             transaction.add(R.id.container, DetailFragment.newInstance(item!!.idMeal), "fragA")
@@ -52,6 +53,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     private lateinit var recipeDatabase: RecipeDatabase
     var topAnime: Animation? = null
     var botAnime: Animation? = null
+    var _checkFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -76,6 +78,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         getDataCatogy()
         getDataRandom()
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         sharedElementEnterTransition =
@@ -90,7 +93,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         callBack!!.enqueue(object : Callback<MealType> {
             override fun onResponse(p0: Call<MealType>?, response: Response<MealType>?) {
                 if (response?.body() != null) {
-                    mealType = response.body()
+                    mealType = response.body()!!
                     listMeal.clear()
                     listMeal.addAll(mealType.listMealType!!)
                     mealAdapter.updateDataRecipe(listMeal)
@@ -109,7 +112,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         val callBack = dataClient?.getDataRandom()
         callBack!!.enqueue(object : Callback<RecipeType> {
             override fun onResponse(p0: Call<RecipeType>?, p1: Response<RecipeType>?) {
-                recipeRandomType = p1!!.body()
+                recipeRandomType = p1?.body()!!
                 listRecipe.addAll(recipeRandomType.recipeRandomType!!)
                 textMealRecipe.text = listRecipe.first().name
                 textTagRecipe.text = listRecipe.first().tag
@@ -126,17 +129,23 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
                                 it.idRecipe == listRecipe.first().idRecipe
                             }) {
                             favoriteDrawer.post {
-                                favoriteDrawer.setImageResource(R.drawable.ic_heart)
+                                favoriteDrawer.setBackgroundResource(R.drawable.ic_favorite_24)
+                                _checkFavorite = false
                                 Toast.makeText(context, "Bạn Đã Bỏ Thích", Toast.LENGTH_SHORT)
                                     .show()
                             }
                             recipeDao.deleteUsers(listRecipe.first())
                         } else {
                             favoriteDrawer.post {
-                                favoriteDrawer.setImageResource(R.drawable.ic_loved)
+                                favoriteDrawer.setBackgroundResource(R.drawable.ic_loved)
+                                _checkFavorite = true
                                 Toast.makeText(context, "Bạn Đã Thích", Toast.LENGTH_SHORT).show()
                             }
-                            recipeDao.insert(listRecipe.first())
+                            val a = listRecipe.first()
+                            if (a.tag.isNullOrEmpty()) {
+                                a.tag = ""
+                            }
+                            recipeDao.insert(a)
                         }
                     }
                 }
@@ -153,7 +162,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         val callBack = dataClient?.getDataCategory()
         callBack!!.enqueue(object : Callback<Categories> {
             override fun onResponse(p0: Call<Categories>?, response: Response<Categories>?) {
-                categories = response!!.body()
+                categories = response!!.body()!!
                 listCatory.addAll(categories.categories!!)
                 categoryAdapter.updateData(listCatory)
             }
@@ -181,8 +190,10 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     }
 
     override fun onItemClick(item: Recipe?) {
-        val transaction: FragmentTransaction = requireActivity().supportFragmentManager.beginTransaction()
-       transaction.add(R.id.container, DetailFragment.newInstance(item!!), "fragA")
+        checkFavorite = _checkFavorite
+        val transaction: FragmentTransaction =
+            requireActivity().supportFragmentManager.beginTransaction()
+        transaction.add(R.id.container, DetailFragment.newInstance(item!!), "fragA")
 //        transaction.replace(R.id.container, DetailFragment.newInstance(item!!), "fragA")
 //            .addSharedElement(imageMealThumbRecipe, imageMealThumbRecipe.transitionName)
 //            .addSharedElement(textMealRecipe, textMealRecipe.transitionName)
@@ -192,5 +203,6 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     companion object {
         fun newInstance() = HomeFragment()
         const val TAG = "AAA"
+        var checkFavorite = false
     }
 }

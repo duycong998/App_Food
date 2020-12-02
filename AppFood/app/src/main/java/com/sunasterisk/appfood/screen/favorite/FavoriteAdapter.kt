@@ -72,7 +72,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.ViewHolder?>() {
 
         fun bindViewData(recipe: Recipe) {
             itemView.run {
-                favoriteDrawer.setImageResource(drawable.ic_loved)
+                favoriteDrawer.setBackgroundResource(drawable.ic_loved)
                 foodNameView.text = recipe.name
                 foodID.text = recipe.tag
                 if(recipe.urlImage == ""){

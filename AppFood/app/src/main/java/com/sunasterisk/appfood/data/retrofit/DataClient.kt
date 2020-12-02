@@ -23,6 +23,12 @@ interface DataClient {
         @Query("s") strMeal: String?
     ): Call<RecipeType>
 
+//    @GET("search.php")
+//    fun getDataSearch(
+//        @Query("f") strMeal: String?
+//    ): Call<RecipeType>
+
+
     @GET("lookup.php")
     fun getDataById(
         @Query("i") strId: String?

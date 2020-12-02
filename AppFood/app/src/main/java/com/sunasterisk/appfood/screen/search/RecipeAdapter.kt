@@ -61,9 +61,9 @@ class RecipeAdapter : RecyclerView.Adapter<RecipeAdapter.ViewHolder?>() {
                     .into(foodImageView)
             }
             if (listFavorites.any { it == recipe.idRecipe }) {
-                itemView.favoriteDrawer.setImageResource(R.drawable.ic_loved)
+                itemView.favoriteDrawer.setBackgroundResource(R.drawable.ic_loved)
             } else {
-                itemView.favoriteDrawer.setImageResource(R.drawable.ic_favorite_24)
+                itemView.favoriteDrawer.setBackgroundResource(R.drawable.ic_favorite_24)
             }
 
             if(SearchFragment.isDark) {

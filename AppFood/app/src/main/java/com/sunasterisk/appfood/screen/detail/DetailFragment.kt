@@ -19,6 +19,7 @@ import com.sunasterisk.appfood.R
 import com.sunasterisk.appfood.data.model.Recipe
 import com.sunasterisk.appfood.data.model.RecipeType
 import com.sunasterisk.appfood.data.retrofit.APIUtil
+import com.sunasterisk.appfood.screen.home.HomeFragment
 import com.sunasterisk.appfood.screen.main.PlayYoutubeActivity
 import kotlinx.android.synthetic.main.fragment_detail_info.*
 import retrofit2.Call
@@ -73,6 +74,11 @@ class DetailFragment : Fragment() {
     }
 
     private fun init() {
+        if(HomeFragment.checkFavorite) {
+            favoriteDrawerDetail.setBackgroundResource(R.drawable.ic_loved)
+        } else {
+            favoriteDrawerDetail.setBackgroundResource(R.drawable.ic_favorite_24)
+        }
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbarDetail)
         (activity as AppCompatActivity?)!!.supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbarDetail.setNavigationOnClickListener {
@@ -84,6 +90,7 @@ class DetailFragment : Fragment() {
 //                .addSharedElement(videoPlayYoutube, videoPlayYoutube.transitionName)
 //                .addSharedElement(textNameDetail, textNameDetail.transitionName)
             transaction.commit()
+           HomeFragment.checkFavorite = false
         }
 
         ImageButtonPlay.setOnClickListener {
@@ -100,8 +107,8 @@ class DetailFragment : Fragment() {
         val callBack = dataClient?.getDataById(id)
         callBack!!.enqueue(object : Callback<RecipeType> {
             override fun onResponse(p0: Call<RecipeType>?, p1: Response<RecipeType>?) {
-                if (p1?.body() != null) {
-                    recipeRandomType = p1.body()
+                if (p1!!.body() != null) {
+                    recipeRandomType = p1!!.body()!!
                     listRecipe.clear()
                     listRecipe.addAll(recipeRandomType.recipeRandomType!!)
                     textNameDetail.text = listRecipe.first().name

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.sunasterisk.appfood.data.model.Recipe
 
-@Database(entities = [Recipe::class], version = 1, exportSchema = false)
+@Database(entities = [Recipe::class], version = 2, exportSchema = false)
 abstract class  RecipeDatabase : RoomDatabase() {
     abstract fun recipeDao() : RecipeDao
 

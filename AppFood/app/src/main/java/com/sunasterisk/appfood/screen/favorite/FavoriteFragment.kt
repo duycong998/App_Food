@@ -31,6 +31,7 @@ import com.sunasterisk.appfood.data.db.RecipeDatabase
 import com.sunasterisk.appfood.data.model.AddPicture
 import com.sunasterisk.appfood.data.model.Recipe
 import com.sunasterisk.appfood.screen.detail.DetailFragment
+import com.sunasterisk.appfood.screen.home.HomeFragment
 import com.sunasterisk.food_01.utils.OnItemRecyclerViewClickListenner
 import com.sunasterisk.food_01.utils.SendDataFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
@@ -209,8 +210,10 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
                 Executors.newSingleThreadExecutor().execute {
                     recipeDao!!.insert(recipe)
                     listRecipe.add(recipe)
+                    init()
                     // val list = recipeDao!!.getDataAll().toMutableList()
                 }
+
                 //  adapter.updateData(listRecipe)
                 Toast.makeText(requireContext(), "Thêm Thành Công", Toast.LENGTH_SHORT).show()
                 diaLog!!.dismiss()
@@ -330,6 +333,7 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
 //    }
 
     override fun onItemClickListener(item: Recipe?) {
+        HomeFragment.checkFavorite = true
         val transaction: FragmentTransaction =
             requireActivity().supportFragmentManager.beginTransaction()
         transaction.add(R.id.container, DetailFragment.newInstance(item!!), "fragA")

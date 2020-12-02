@@ -93,7 +93,7 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
                 call: Call<RecipeType>?,
                 response: Response<RecipeType>?
             ) {
-                recipeType = response!!.body()
+                recipeType = response!!.body()!!
                 listRecipe.clear()
                 recipeType.recipeRandomType?.let { listRecipe.addAll(it) }
                 if (listRecipe.size > 0) {
@@ -121,7 +121,7 @@ class SearchFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe> {
                 call: Call<RecipeType>?,
                 response: Response<RecipeType>?
             ) {
-                recipeType = response!!.body()
+                recipeType = response!!.body()!!
                 listRecipe.clear()
                 recipeType.recipeRandomType?.let { listRecipe.addAll(it) }
                 if (listRecipe.size > 0) {

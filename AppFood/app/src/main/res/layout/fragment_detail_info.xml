@@ -56,7 +56,7 @@
             app:layout_constraintTop_toBottomOf="@id/frame">
 
             <androidx.drawerlayout.widget.DrawerLayout
-                android:id="@+id/favoriteDrawer"
+                android:id="@+id/favoriteDrawerDetail"
                 android:layout_width="@dimen/dp_24"
                 android:layout_height="@dimen/dp_24"
                 android:layout_gravity="center"
