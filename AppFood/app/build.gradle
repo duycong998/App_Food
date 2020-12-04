@@ -87,4 +87,7 @@ dependencies {
 
     //animatoo
     implementation 'com.github.mohammadatif:Animatoo:master'
+
+    //love
+    implementation 'com.unstoppable:submitbutton:1.1.3'
 }
