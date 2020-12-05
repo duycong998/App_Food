@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/aa">
@@ -43,9 +44,9 @@
             android:layout_marginRight="10dp"
             android:hint="UserName"
             android:transitionName="logo_user"
-            app:startIconDrawable="@drawable/ic_user"
             app:boxBackgroundColor="#80FFFFFF"
-            app:hintTextColor="@color/white">
+            app:hintTextColor="@color/white"
+            app:startIconDrawable="@drawable/ic_user">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -55,7 +56,6 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/edittextPassWord"
-            app:startIconDrawable="@drawable/ic_pass"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -65,7 +65,8 @@
             android:transitionName="logo_pass"
             app:boxBackgroundColor="#80FFFFFF"
             app:hintTextColor="@color/white"
-            app:passwordToggleEnabled="true">
+            app:passwordToggleEnabled="true"
+            app:startIconDrawable="@drawable/ic_pass">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
@@ -73,35 +74,39 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
-            android:layout_marginRight="@dimen/dp_10"
-            android:layout_margin="@dimen/dp_10"
             style="@style/name_title"
-            android:textColor="@color/white"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="right"
+            android:layout_margin="@dimen/dp_10"
+            android:layout_marginRight="@dimen/dp_10"
             android:elevation="0dp"
+            android:gravity="right"
             android:text="Forget Password?"
+            android:textColor="@color/white"
             android:textStyle="italic" />
 
-        <Button
+        <com.unstoppable.submitbuttonview.SubmitButton
+            app:failedColor="@color/colorBlack"
+            app:succeedColor="@color/colorAccent"
+            app:buttonColor="@color/colorJannaGo"
             android:id="@+id/buttonGo"
-            style="@style/name_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/dp_50"
+            android:layout_centerInParent="true"
             android:layout_margin="10dp"
-            android:background="@drawable/custom_dialog"
-            android:text="Go"
-            android:transitionName="logo_go" />
+            android:background="@drawable/custom_button_go"
+            app:buttonText="Go"
+            android:transitionName="logo_go"
+            app:buttonTextSize="25sp" />
 
         <Button
             android:id="@+id/buttonSignUp"
             style="@style/name_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
             android:layout_marginRight="@dimen/dp_10"
-            android:layout_width="match_parent"
             android:backgroundTint="@color/colorButton"
-            android:layout_height="wrap_content"
             android:text="NEW USER? CREATE ACCOUNT"
             android:textStyle="bold"
             android:transitionName="logo_title" />

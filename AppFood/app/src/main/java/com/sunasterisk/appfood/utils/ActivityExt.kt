@@ -20,6 +20,8 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
 fun AppCompatActivity.replaceFragmentt(fragment: Fragment, frameId: Int) {
     supportFragmentManager.inTransaction { replace(frameId, fragment, fragment.javaClass.simpleName) }
 }
+
+
 fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, addToStack: Boolean) {
     supportFragmentManager.inTransaction {
         if (addToStack) replace(frameId, fragment, fragment.javaClass.simpleName)
@@ -51,7 +53,6 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int, addToStack: 
         else add(frameId, fragment)
     }
 }
-
 
 fun AppCompatActivity.getCurrentFragment(): Fragment? {
     val fragmentManager = supportFragmentManager

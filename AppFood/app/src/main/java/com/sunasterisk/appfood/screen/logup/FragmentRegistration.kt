@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.TransitionInflater
 import com.sunasterisk.appfood.R
 import com.sunasterisk.appfood.screen.login.LoginFragment
+import com.sunasterisk.appfood.screen.main.tabLayout.MainPageFragment
+import com.sunasterisk.food_01.utils.replaceFragmentt
 import kotlinx.android.synthetic.main.fragment_registration.*
 
 class FragmentRegistration : Fragment(R.layout.fragment_registration) {
@@ -30,7 +33,8 @@ class FragmentRegistration : Fragment(R.layout.fragment_registration) {
 
         buttonLoginSinUp.setOnClickListener {
             val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
-            fragmentTransaction.replace(R.id.container, LoginFragment())
+            fragmentTransaction
+                .replace(R.id.container, LoginFragment())
                 .addSharedElement(imageAnimaSignUp, imageAnimaSignUp.transitionName)
                 .addSharedElement(textViewSignUp, textViewSignUp.transitionName)
                 .addSharedElement(
