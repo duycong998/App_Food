@@ -41,6 +41,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        checkLogin()
+
         buttonSignUp.setOnClickListener {
             val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction.replace(R.id.container, FragmentRegistration())
@@ -52,13 +55,13 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 .addSharedElement(buttonSignUp, buttonSignUp.transitionName)
             fragmentTransaction.commit()
         }
-        checkLogin()
     }
 
     fun checkLogin() {
         buttonGo.setOnClickListener {
             val userName = edittextUserName.editText?.text.toString().trim()
             val mPass = edittextUserName.editText?.text.toString().trim()
+            buttonSignUp.isEnabled = false
             Handler().postDelayed({
                 if (userName.equals("cong") && mPass.equals("cong")) {
                     buttonGo.doResult(true)
@@ -68,13 +71,19 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                             R.id.container
                         )
                     }, 1000)
+                    Toast.makeText(context, "Đăng nhập thành công", Toast.LENGTH_SHORT).show()
+                } else if (userName.isEmpty() || mPass.isEmpty()) {
+                    Toast.makeText(context, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT)
+                        .show()
+                    buttonGo.doResult(false)
+                    Handler().postDelayed({ buttonGo.reset() }, 1000)
                 } else {
                     buttonGo.doResult(false)
                     Handler().postDelayed({ buttonGo.reset() }, 1000)
                 }
+                Toast.makeText(context, "Đăng nhập thất bại", Toast.LENGTH_SHORT).show()
+                buttonSignUp.isEnabled = true
             }, 3000)
         }
     }
-
-
 }

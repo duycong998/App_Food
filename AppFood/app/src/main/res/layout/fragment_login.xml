@@ -78,10 +78,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/dp_10"
+            android:padding="@dimen/dp_5"
             android:layout_marginRight="@dimen/dp_10"
             android:elevation="0dp"
             android:gravity="right"
-            android:text="Forget Password?"
+            android:text="Forget Password? "
             android:textColor="@color/white"
             android:textStyle="italic" />
 
@@ -100,8 +101,8 @@
             app:buttonTextSize="25sp" />
 
         <Button
+            android:padding="@dimen/dp_10"
             android:id="@+id/buttonSignUp"
-            style="@style/name_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dp_10"
