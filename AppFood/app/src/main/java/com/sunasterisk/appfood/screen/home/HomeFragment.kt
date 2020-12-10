@@ -23,7 +23,6 @@ import com.sunasterisk.appfood.screen.home.adapter.MealAdapter
 import com.sunasterisk.food_01.utils.OnItemRecyclerViewClickListenner
 import com.sunasterisk.food_01.utils.SendDataFragment
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_splash.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,9 +50,9 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     private var mealType = MealType()
     private lateinit var recipeDao: RecipeDao
     private lateinit var recipeDatabase: RecipeDatabase
-    var topAnime: Animation? = null
-    var botAnime: Animation? = null
-    var _checkFavorite = false
+    private var topAnime: Animation? = null
+    private var botAnime: Animation? = null
+    private var _checkFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
