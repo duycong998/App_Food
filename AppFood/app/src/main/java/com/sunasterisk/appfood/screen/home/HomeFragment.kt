@@ -133,7 +133,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
                                 Toast.makeText(context, "Bạn Đã Bỏ Thích", Toast.LENGTH_SHORT)
                                     .show()
                             }
-                            recipeDao.deleteUsers(listRecipe.first())
+                            recipeDao.deleteRecipe(listRecipe.first())
                         } else {
                             favoriteDrawer.post {
                                 favoriteDrawer.setBackgroundResource(R.drawable.ic_loved)
@@ -184,7 +184,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         recyclerviewRecipe.adapter = mealAdapter
         mealAdapter.registerItemRecyclerViewClickListener(onItemMealClickByID)
 
-        recipeDatabase = RecipeDatabase.getDatabase(requireContext())
+        recipeDatabase = RecipeDatabase.getDatabaseRecipe(requireContext())
         recipeDao = recipeDatabase.recipeDao()
     }
 

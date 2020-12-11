@@ -28,7 +28,7 @@ class FragmentRegistration : Fragment(R.layout.fragment_registration) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        buttonLoginSinUp.setOnClickListener {
+        buttonRegistration.setOnClickListener {
             val fragmentTransaction: FragmentTransaction = fragmentManager!!.beginTransaction()
             fragmentTransaction
                 .replace(R.id.container, LoginFragment())
@@ -43,7 +43,7 @@ class FragmentRegistration : Fragment(R.layout.fragment_registration) {
                     edittextPassWordRegristration.transitionName
                 )
                 .addSharedElement(buttonGoRegristration, buttonGoRegristration.transitionName)
-                .addSharedElement(buttonLoginSinUp, buttonLoginSinUp.transitionName)
+                .addSharedElement(buttonRegistration, buttonRegistration.transitionName)
             fragmentTransaction.commit()
         }
     }

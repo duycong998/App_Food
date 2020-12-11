@@ -135,7 +135,7 @@
             android:transitionName="logo_go" />
 
         <Button
-            android:id="@+id/buttonLoginSinUp"
+            android:id="@+id/buttonRegistration"
             style="@style/name_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

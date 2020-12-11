@@ -87,7 +87,7 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
 
     private fun init() {
         Executors.newSingleThreadExecutor().execute {
-            recipeDatabase = RecipeDatabase.getDatabase(requireContext())
+            recipeDatabase = RecipeDatabase.getDatabaseRecipe(requireContext())
             recipeDao = recipeDatabase?.recipeDao()
             val data = recipeDao!!.getDataAll()
             Handler(Looper.getMainLooper()).post {
@@ -345,7 +345,7 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
         builder.setMessage("Bạn có muốn xóa không???")
         builder.setPositiveButton("Có") { dialog, _ ->
             Executors.newSingleThreadExecutor().execute {
-                recipeDao?.deleteUsers(item!!)
+                recipeDao?.deleteRecipe(item!!)
             }
             adapter.deleteRecipe(item!!)
             dialog.dismiss()
