@@ -23,7 +23,6 @@ import com.sunasterisk.appfood.screen.home.adapter.MealAdapter
 import com.sunasterisk.food_01.utils.OnItemRecyclerViewClickListenner
 import com.sunasterisk.food_01.utils.SendDataFragment
 import kotlinx.android.synthetic.main.fragment_home.*
-import kotlinx.android.synthetic.main.fragment_splash.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -51,9 +50,9 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
     private var mealType = MealType()
     private lateinit var recipeDao: RecipeDao
     private lateinit var recipeDatabase: RecipeDatabase
-    var topAnime: Animation? = null
-    var botAnime: Animation? = null
-    var _checkFavorite = false
+    private var topAnime: Animation? = null
+    private var botAnime: Animation? = null
+    private var _checkFavorite = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -134,7 +133,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
                                 Toast.makeText(context, "Bạn Đã Bỏ Thích", Toast.LENGTH_SHORT)
                                     .show()
                             }
-                            recipeDao.deleteUsers(listRecipe.first())
+                            recipeDao.deleteRecipe(listRecipe.first())
                         } else {
                             favoriteDrawer.post {
                                 favoriteDrawer.setBackgroundResource(R.drawable.ic_loved)
@@ -185,7 +184,7 @@ class HomeFragment : Fragment(), OnItemRecyclerViewClickListenner<Category>,
         recyclerviewRecipe.adapter = mealAdapter
         mealAdapter.registerItemRecyclerViewClickListener(onItemMealClickByID)
 
-        recipeDatabase = RecipeDatabase.getDatabase(requireContext())
+        recipeDatabase = RecipeDatabase.getDatabaseRecipe(requireContext())
         recipeDao = recipeDatabase.recipeDao()
     }
 

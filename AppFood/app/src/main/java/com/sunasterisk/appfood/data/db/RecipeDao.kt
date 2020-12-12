@@ -16,5 +16,5 @@ interface RecipeDao {
     fun getDataAll() : List<Recipe>
 
     @Delete
-    fun deleteUsers(recipe: Recipe)
+    fun deleteRecipe(recipe: Recipe)
 }

@@ -4,17 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.sunasterisk.appfood.data.model.Recipe
+import com.sunasterisk.appfood.data.model.User
 
-@Database(entities = [Recipe::class], version = 2, exportSchema = false)
-abstract class  RecipeDatabase : RoomDatabase() {
-    abstract fun recipeDao() : RecipeDao
+@Database(entities = [User::class], version = 2, exportSchema = false)
+abstract class  UserDatabase : RoomDatabase() {
+    abstract fun userDao() : UserDao
 
     companion object {
         @Volatile
-        private var INSTANCE: RecipeDatabase? = null
+        private var INSTANCE: UserDatabase? = null
 
-        fun getDatabaseRecipe(context: Context): RecipeDatabase {
+        fun getDatabaseUser(context: Context): UserDatabase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {
                 return tempInstance
@@ -22,8 +22,8 @@ abstract class  RecipeDatabase : RoomDatabase() {
             synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
-                    RecipeDatabase::class.java,
-                    "recipe_table"
+                    UserDatabase::class.java,
+                    "user_table"
                 ).build()
                 INSTANCE = instance
                 return instance

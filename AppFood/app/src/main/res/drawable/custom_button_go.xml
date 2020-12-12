@@ -4,6 +4,6 @@
 
     <corners android:radius="@dimen/dp_20" />
 
-    <gradient android:endColor="@color/colorPink"
-        android:startColor="@color/colorJanna"/>
+    <gradient android:endColor="@color/colorGo"
+        android:startColor="@color/colorButton"/>
 </shape>
