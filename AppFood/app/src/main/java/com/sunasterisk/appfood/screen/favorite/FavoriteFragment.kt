@@ -90,9 +90,18 @@ class FavoriteFragment : Fragment(), OnItemRecyclerViewClickListenner<Recipe>,
             recipeDatabase = RecipeDatabase.getDatabaseRecipe(requireContext())
             recipeDao = recipeDatabase?.recipeDao()
             val data = recipeDao!!.getDataAll()
-            Handler(Looper.getMainLooper()).post {
-                adapter.updateData(data.toMutableList())
-                recyclerViewFavorite.adapter = adapter
+            if (data.isEmpty()) {
+                Handler(Looper.getMainLooper()).post {
+                    recyclerViewFavorite.visibility = View.GONE
+                    textViewTitle.visibility = View.VISIBLE
+                }
+            } else {
+                Handler(Looper.getMainLooper()).post {
+                    recyclerViewFavorite.visibility = View.VISIBLE
+                    textViewTitle.visibility = View.GONE
+                    adapter.updateData(data.toMutableList())
+                    recyclerViewFavorite.adapter = adapter
+                }
             }
         }
     }
