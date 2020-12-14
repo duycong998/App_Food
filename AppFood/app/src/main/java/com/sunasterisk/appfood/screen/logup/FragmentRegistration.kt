@@ -48,3 +48,4 @@ class FragmentRegistration : Fragment(R.layout.fragment_registration) {
         }
     }
 }
+
